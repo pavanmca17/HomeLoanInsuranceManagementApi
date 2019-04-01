@@ -6,8 +6,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\Factories\ObjectsFactory.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Insurance\" />
+    <Folder Include="Controllers\Borrower\" />
+    <Folder Include="Controllers\Property\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Helpers\Factories\ObjectsFactory.cs" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeLoanInsuranceManagementApi", "HomeLoanInsuranceManagementApi\HomeLoanInsuranceManagementApi.csproj", "{BE3D088F-C745-4606-BE55-1068E20CAF5A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{52E29CD3-5CE6-48FD-91D6-2694B18C1978}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BE3D088F-C745-4606-BE55-1068E20CAF5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE3D088F-C745-4606-BE55-1068E20CAF5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE3D088F-C745-4606-BE55-1068E20CAF5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52E29CD3-5CE6-48FD-91D6-2694B18C1978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52E29CD3-5CE6-48FD-91D6-2694B18C1978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52E29CD3-5CE6-48FD-91D6-2694B18C1978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52E29CD3-5CE6-48FD-91D6-2694B18C1978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
