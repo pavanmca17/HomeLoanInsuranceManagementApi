@@ -14,6 +14,7 @@ namespace HomeLoanInsuranceManagementApi.Models
         public String Phone { get; set; }
         public String StreetAddress { get; set; }
         public String MailingAddress { get; set; }
+        public List<string> propertiesIds { get; set; }
 
     }
 }
