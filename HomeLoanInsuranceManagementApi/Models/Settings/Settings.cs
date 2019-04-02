@@ -11,12 +11,5 @@ namespace HomeLoanInsuranceManagementApi.Models
         public string MongoDatabase;
         public string Env;      
 
-    }
-
-    public class RedisCacheSettings
-    {
-        public string RedisCacheName;
-        public string Connectingstring;
-
-    }
+    }    
 }

@@ -21,7 +21,7 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
         }
 
         // Get all Banks
-        public async Task<IEnumerable<Bank>> GetAllBanks()
+        public async Task<IEnumerable<Bank>> GetAll()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
         }
 
         // query after Id or InternalId (BSonId value)
-        public async Task<Bank> GetNote(string id)
+        public async Task<Bank> Get(string id)
         {
             try
             {
@@ -45,49 +45,27 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             {
                 throw ex;
             }
-        }
+        }        
 
-        //// query after body text, updated time, and header image size
-        //public async Task<IEnumerable<Note>> GetNote(string bodyText, DateTime updatedFrom, long headerSizeLimit)
-        //{
-        //    try
-        //    {
-        //        var query = _context.Notes.Find(note => note.Body.Contains(bodyText) &&
-        //                                        note.UpdatedOn >= updatedFrom &&
-        //                                        note.HeaderImage.ImageSize <= headerSizeLimit);
-
-        //        return await query.ToListAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // log or manage the exception
-        //        throw ex;
-        //    }
-        //}
-
-        private ObjectId GetInternalId(string id)
+        public async Task<Result> Add(Bank bank)
         {
-            ObjectId internalId;
-            if (!ObjectId.TryParse(id, out internalId))
-                internalId = ObjectId.Empty;
-
-            return internalId;
-        }
-
-        public async Task AddBank(Bank bank)
-        {
+            Result result = new Result() { IsSuccess = true, Message = "Message" };
+           
             try
             {
                 await _context.Banks.InsertOneAsync(bank);
+               
             }
             catch (Exception ex)
             {
                 // log or manage the exception
-                throw ex;
+                throw ex;   
             }
+
+            return await Task.FromResult<Result>(result);
         }
 
-        public async Task<bool> RemoveBank(string id)
+        public async Task<bool> Remove(string id)
         {
             try
             {
@@ -102,10 +80,10 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             }
         }
 
-        public async Task<bool> UpdateBank (string id, string body)
+        public async Task<bool> Update(string id, Bank bank)
         {
             var filter = Builders<Bank>.Filter.Eq(s => s.Id, id);
-            var update = Builders<Bank>.Update.Set(s => s.Body, body).CurrentDate(s => s.UpdatedOn);
+            var update = Builders<Bank>.Update.Set(s => s.Comments, bank.Comments).CurrentDate(s => s.UpdatedOn);
 
             try
             {
@@ -136,17 +114,8 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             }
         }
 
-        // Demo function - full document update
-        public async Task<bool> UpdateBankDocument(string id, string body)
-        {
-            var item = await GetNote(id) ?? new Bank();
-            item.Body = body;
-            item.UpdatedOn = DateTime.Now;
-            return await UpdateBank(id, item);
-        }
-
         // Cleanup
-        public async Task<bool> RemoveAllBanks()
+        public async Task<bool> RemoveAll()
         {
             try
             {
@@ -160,6 +129,14 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
                 throw ex;
             }
         }
+
+        private ObjectId GetInternalId(string id)
+        {
+            ObjectId internalId;
+            if (!ObjectId.TryParse(id, out internalId))
+                internalId = ObjectId.Empty;
+
+            return internalId;
+        }
     }
 }
-s

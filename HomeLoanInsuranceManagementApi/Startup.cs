@@ -6,10 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using HomeLoanInsuranceManagementApi.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using HomeLoanInsuranceManagementApi.Helpers;
+using HomeLoanInsuranceManagementApi.Services.Contracts;
+using HomeLoanInsuranceManagementApi.Services.Providers;
 
 namespace HomeLoanInsuranceManagementApi
 {
@@ -39,16 +44,12 @@ namespace HomeLoanInsuranceManagementApi
 
                 // api versioning
                 services.AddApiVersioning(o => o.ApiVersionReader = new HeaderApiVersionReader("api-version"));
-
-                services.AddHttpClient(Configuration);
+                         
 
                 services.ConfigureValues(Configuration);
 
-                services.AddDBContext<ProductContext>(Configuration);
-
-                services.AddTransient<INoteRepository, NoteRepository>();
-                services.AddTransient<IProductRepository, ProductRepository>();
-                services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+                services.AddTransient<IBankService, BankServie>();
+               
 
                 services.AddCors(policy =>
                 {
@@ -57,6 +58,7 @@ namespace HomeLoanInsuranceManagementApi
                                                                      .AllowAnyOrigin());
                 });
 
+                 //If Redis cache is used
                 //services.AddDistributedRedisCache(options =>
                 //{
                 //    options.InstanceName = Configuration.GetSection("RedisCacheDetails:HostName").Value;
@@ -67,7 +69,7 @@ namespace HomeLoanInsuranceManagementApi
             }
 
             // This method gets called by the runtime.Use this method to configure the HTTP request pipeline.
-            public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDistributedCache distributedCache)
+            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
             {
                 if (env.IsDevelopment())
                 {
@@ -84,14 +86,8 @@ namespace HomeLoanInsuranceManagementApi
 
                 }
 
-                //string appStartTimeKey = "app-Last-Start-Time";
-                //var serverStartTimeString = DateTime.Now.ToString();
-                //byte[] val = Encoding.UTF8.GetBytes(serverStartTimeString);
-                //distributedCache.SetAsync(appStartTimeKey, val);
-                //app.ConfigureApplicationStartTimeHeaderMiddleWare();
                 app.ConfigureRequestResponseLoggingMiddleware();
                 app.ConfigureCustomExceptionMiddleware();
-
                 app.UseCors("CorsPolicy");
                 app.UseMvc();
 

@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeLoanInsuranceManagementApi.Services.Contracts
 {
-    public interface IBankService : IService<Bank>
+    public interface IPolicyService : IService<InsurancePolicy>
     {
-        
     }
 }

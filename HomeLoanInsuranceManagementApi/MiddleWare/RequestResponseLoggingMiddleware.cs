@@ -21,7 +21,7 @@ namespace HomeLoanInsuranceManagementApi.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.Request.Headers["api-version"] == "3.0")
+            if (context.Request.Headers["api-version"] == "2.0")
             {
                 string request = await FormatRequest(context.Request);
 

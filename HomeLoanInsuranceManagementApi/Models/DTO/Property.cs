@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HomeLoanInsuranceManagementApi.Models
 {
-    public class Property
+    public class Property : BaseEntity
     {
     }
 }

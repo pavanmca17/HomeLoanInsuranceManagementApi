@@ -1,11 +1,11 @@
 ﻿using HomeLoanInsuranceManagementApi.Middleware;
+using HomeLoanInsuranceManagementApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 
-namespace DemoAPI
+namespace HomeLoanInsuranceManagementApi.Extensions
 {
     public static class ServiceExtensions
     {
@@ -25,10 +25,8 @@ namespace DemoAPI
         {
             services.Configure<Settings>(options =>
             {
-                options.MongoDBConnectionString = Configuration.GetSection("DBConnections:MongoConnectionString").Value;
-                options.SqlServerConnectionString = Configuration.GetSection("DBConnections:SqlServerConnectionString").Value;
-                options.NotesDatabase = Configuration.GetSection("DBConnections:NoteDataBase").Value;
-                options.EmployeeDatabase = Configuration.GetSection("DBConnections:EmployeeDatabase").Value;
+                options.MongoDBConnectionString = Configuration.GetSection("DBConnections:MongoConnectionString").Value;               
+                options.MongoDatabase = Configuration.GetSection("DBConnections:MongoDataBase").Value;               
                 options.Env = Configuration.GetSection("Enviroment:Value").Value;
                
             });
@@ -43,12 +41,6 @@ namespace DemoAPI
         {
             app.UseMiddleware<RequestResponseLoggingMiddleware>();
         }
-
-        public static void ConfigureApplicationStartTimeHeaderMiddleWare(this IApplicationBuilder app)
-        {
-            app.UseMiddleware<ApplicationStartTimeHeaderMiddleWare>();
-        }
-
 
     }
 }
