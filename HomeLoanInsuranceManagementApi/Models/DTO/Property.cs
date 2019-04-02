@@ -6,5 +6,6 @@ namespace HomeLoanInsuranceManagementApi.Models
 {
     public class Property : BaseEntity
     {
+       public String borrowerId { get; set; }
     }
 }
