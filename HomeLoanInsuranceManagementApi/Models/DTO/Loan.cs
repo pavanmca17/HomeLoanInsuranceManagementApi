@@ -25,6 +25,6 @@ namespace HomeLoanInsuranceManagementApi.Models
 
         public Double RemainingTenure { get; set; }
 
-        
+        public List<String> PoliciesIds { get; set;}
     }
 }
