@@ -11,6 +11,12 @@ namespace HomeLoanInsuranceManagementApi.Models
 
         }
 
+        public String BankId { get; set; }
+        
+        public String PropertyId { get; set; }
+        
+        public String BorrowerId { get; set;}        
+        
         public Double OriginalAmount { get; set; }
 
         public Double RemainingAmount { get; set; }
