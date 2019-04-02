@@ -8,7 +8,7 @@ namespace HomeLoanInsuranceManagementApi.Models
     public class InsurancePolicy
     {
         
-        string Issuedby { get; set; }
+        string InsuranceCompanyId { get; set; }
 
         [BsonDateTimeOptions]
         public DateTime PolicyStartDate { get; set; }
@@ -17,6 +17,8 @@ namespace HomeLoanInsuranceManagementApi.Models
         public DateTime PolicyEndDate { get; set; }
 
         public bool IsActive { get; set; }
+        
+        
 
 
 
