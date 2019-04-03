@@ -92,16 +92,17 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             try
             {
                 var filter = Builders<Bank>.Filter.Eq(s => s.Id, id);
-                var update = Builders<Bank>.Update.Set(s => s.BorrowerIds, bank.BorrowerIds).
-                                                   Set(s => s.Comments, bank.Comments).
-                                                   CurrentDate(s => s.UpdatedOn);
+                var update = Builders<Bank>.Update.Set(s => s.BorrowerIds, bank.BorrowerIds)
+                                                  .Set(s => s.PropertiesIds, bank.PropertiesIds)
+                                                  .Set(s => s.LoanIds, bank.LoanIds)
+                                                  .Set(s => s.UpdateComments, bank.UpdateComments)
+                                                  .Set(s => s.UpdatedUsername, bank.UpdatedUsername)
+                                                  .CurrentDate(s => s.UpdatedOn);
 
                 UpdateResult actionResult = await _context.Banks.UpdateOneAsync(filter, update);
 
-                //ReplaceOneResult actionResult = await _context.Banks.ReplaceOneAsync(n => n.Id.Equals(id),
-                //                                                                      bank,
-                //                                                                      new UpdateOptions { IsUpsert = true });
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
+
                 result.Message = "Bank Record Updated";
                 
             }

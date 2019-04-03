@@ -14,9 +14,10 @@ namespace HomeLoanInsuranceManagementApi.Models
         public String Phone { get; set; }
         public String StreetAddress { get; set; }
         public String MailingAddress { get; set; }
-        // Presuming a Single Borrower could have multile properties and loans
-        public List<string> propertiesIds { get; set; }
-        public List<string> LoanIds { get; set; }
+        public string PropertyId { get; set; }
+        public string LoanId { get; set; }
+        public string PolicyID { get; set; }
+        public List<string> previousPoliciesID { get; set; }
 
     }
 }

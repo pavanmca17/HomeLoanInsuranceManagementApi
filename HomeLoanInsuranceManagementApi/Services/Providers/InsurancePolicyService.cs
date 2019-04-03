@@ -107,11 +107,16 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             Result result = new Result();
             try
             {
-                ReplaceOneResult actionResult = await _context.InsurancePolicy.ReplaceOneAsync(n => n.Id.Equals(id),
-                                                                                      insurancePolicy,
-                                                                                      new UpdateOptions { IsUpsert = true });
-                result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
-                result.Message = "InsurancePolicy Updated";
+                //var filter = Builders<InsurancePolicy>.Filter.Eq(s => s.Id, id);
+                //var update = Builders<InsurancePolicy>.Update.Set(s => s.Comments, insurancePolicy.).CurrentDate(s => s.UpdatedOn);
+
+                //UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
+
+                //ReplaceOneResult actionResult = await _context.InsurancePolicy.ReplaceOneAsync(n => n.Id.Equals(id),
+                //                                                                      insurancePolicy,
+                //                                                                      new UpdateOptions { IsUpsert = true });
+                //result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
+                //result.Message = "InsurancePolicy Updated";
                
             }
             catch (Exception ex)

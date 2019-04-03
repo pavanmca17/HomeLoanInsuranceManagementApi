@@ -108,11 +108,16 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
         public async Task<Result> Update(string id, Loan loan)
         {
             Result result = new Result();
+
             try
             {
-                ReplaceOneResult actionResult = await _context.Loan.ReplaceOneAsync(n => n.Id.Equals(id),
-                                                                                      loan,
-                                                                                      new UpdateOptions { IsUpsert = true });
+                var filter = Builders<Loan>.Filter.Eq(s => s.Id, id);
+                var update = Builders<Loan>.Update.Set(s => s.CurrentInsurancePolicyID, loan.CurrentInsurancePolicyID)
+                                                   .Set(s => s.PreviousPoliciesIds, loan.PreviousPoliciesIds)
+                                                   .CurrentDate(s => s.UpdatedOn);
+
+                UpdateResult actionResult = await _context.Loan.UpdateOneAsync(filter, update);
+
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
                 result.Message = "Loan Record Updated";
                

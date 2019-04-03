@@ -84,32 +84,21 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             return await Task.FromResult<Result>(result);
         }
 
-        public async Task<bool> UpdateProperty(string id, Property property)
-        {
-            var filter = Builders<Property>.Filter.Eq(s => s.Id, id);
-            var update = Builders<Property>.Update.Set(s => s.Comments, property.Comments).CurrentDate(s => s.UpdatedOn);
-
-            try
-            {
-                UpdateResult actionResult = await _context.Property.UpdateOneAsync(filter, update);
-
-                return actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
-            }
-            catch (Exception ex)
-            {
-                // log or manage the exception
-                throw ex;
-            }
-        }
-
         public async Task<Result> Update(string id, Property property)
         {
             Result result = new Result();
             try
             {
-                ReplaceOneResult actionResult = await _context.Property.ReplaceOneAsync(n => n.Id.Equals(id),
-                                                                                      property,
-                                                                                      new UpdateOptions { IsUpsert = true });
+                var filter = Builders<Property>.Filter.Eq(s => s.Id, id);
+                var update = Builders<Property>.Update.Set(s => s.currentPolicyID, property.currentPolicyID)
+                                                      .Set(s => s.previouspoliciesIds, property.previouspoliciesIds)
+                                                      .CurrentDate(s => s.UpdatedOn);
+
+                UpdateResult actionResult = await _context.Property.UpdateOneAsync(filter, update);
+
+                //ReplaceOneResult actionResult = await _context.Property.ReplaceOneAsync(n => n.Id.Equals(id),
+                //                                                                      property,
+                //                                                                      new UpdateOptions { IsUpsert = true });
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
                 result.Message = "Property Updated";
               

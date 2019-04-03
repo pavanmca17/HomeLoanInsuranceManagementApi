@@ -82,26 +82,9 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             }
 
             return await Task.FromResult<Result>(result);
-        }
+        }     
 
-        public async Task<bool> UpdateBorrower(string id, Borrower borrower)
-        {
-            
-
-            try
-            {
-                UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
-
-                return actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
-            }
-            catch (Exception ex)
-            {
-                // log or manage the exception
-                throw ex;
-            }
-        }
-
-        public async Task<Result> Update(string id, Borrower bank)
+        public async Task<Result> Update(string id, Borrower borrower)
         {
             Result result = new Result();
             try
@@ -111,9 +94,11 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
                              CurrentDate(s => s.UpdatedOn);
 
 
-                ReplaceOneResult actionResult = await _context.Borrower.ReplaceOneAsync(n => n.Id.Equals(id),
-                                                                                      bank,
-                                                                                      new UpdateOptions { IsUpsert = true });
+                //ReplaceOneResult actionResult = await _context.Borrower.ReplaceOneAsync(n => n.Id.Equals(id),
+                //                                                                      bank,
+                //                                                                      new UpdateOptions { IsUpsert = true });
+
+                UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
 
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
                 result.Message = "Borrower Record Updated";               

@@ -87,29 +87,16 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             return await Task.FromResult<Result>(result);
         }
 
-        //public async Task<bool> UpdateBorrower(string id, Borrower borrower)
-        //{
-        //    var filter = Builders<Borrower>.Filter.Eq(s => s.Id, id);
-        //    var update = Builders<Borrower>.Update.Set(s => s.Comments, borrower.Comments).CurrentDate(s => s.UpdatedOn);
-
-        //    try
-        //    {
-        //        UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
-
-        //        return actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // log or manage the exception
-        //        throw ex;
-        //    }
-        //}
-
         public async Task<Result> Update(string id, InsuranceCompany insuranceCompany)
         {
             Result result = new Result();
             try
             {
+                var filter = Builders<InsuranceCompany>.Filter.Eq(s => s.Id, id);
+                var update = Builders<InsuranceCompany>.Update.Set(s => s.InsuredBorrowersIds, insuranceCompany.InsuredBorrowersIds)
+                                                               .Set(s => s.InsuredPropertyIds, insuranceCompany.InsuredPropertyIds)
+                                                               .Set(s => s.policiesIds, insuranceCompany.policiesIds)
+                                                               .CurrentDate(s => s.UpdatedOn);
                 ReplaceOneResult actionResult = await _context.InsuranceCompany.ReplaceOneAsync(n => n.Id.Equals(id),
                                                                                       insuranceCompany,
                                                                                       new UpdateOptions { IsUpsert = true });
