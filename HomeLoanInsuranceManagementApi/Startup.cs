@@ -31,16 +31,16 @@ namespace HomeLoanInsuranceManagementApi
             public void ConfigureServices(IServiceCollection services)
             {
 
-                services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .ConfigureApiBehaviorOptions(options =>
-                {
-                    options.InvalidModelStateResponseFactory = context =>
-                    {
-                        var Issues = new CustomBadRequest(context);
+                services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                //.ConfigureApiBehaviorOptions(options =>
+                //{
+                //    options.InvalidModelStateResponseFactory = context =>
+                //    {
+                //        var Issues = new CustomBadRequest(context);
 
-                        return new BadRequestObjectResult(Issues);
-                    };
-                });
+                //        return new BadRequestObjectResult(Issues);
+                //    };
+                //});
 
                 // api versioning
                 services.AddApiVersioning(o => o.ApiVersionReader = new HeaderApiVersionReader("api-version"));

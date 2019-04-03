@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace HomeLoanInsuranceManagementApi.Services.Contracts
 {
-    public interface IPropertyService :  IService<Property>
+    public interface ILoanService : IService<Loan>
     {
         Task<Borrower> GetBorrowerDetails();
 
-        Task<Loan> GetLoanDetails();       
+        Task<Property> GetPropertyDetails();        
 
-        Task<List<InsurancePolicy>> GetAllPolicies();
+        Task<List<InsurancePolicy>> GetInsurancePoliciesDetails();
+       
     }
 }

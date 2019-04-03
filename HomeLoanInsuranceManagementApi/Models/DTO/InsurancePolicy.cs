@@ -5,10 +5,11 @@ using System.Text;
 
 namespace HomeLoanInsuranceManagementApi.Models
 {
-    public class InsurancePolicy
+    public class InsurancePolicy : BaseEntity
     {
-        
-        string InsuranceCompanyId { get; set; }
+        public string PropertyId { get; set; }
+
+        public string BorrowerId { get; set; }
 
         [BsonDateTimeOptions]
         public DateTime PolicyStartDate { get; set; }
@@ -17,12 +18,8 @@ namespace HomeLoanInsuranceManagementApi.Models
         public DateTime PolicyEndDate { get; set; }
 
         public bool IsActive { get; set; }
-        
-        
 
-
-
-
+        public Double InsuredAmount { get; set; }        
 
     }
 }

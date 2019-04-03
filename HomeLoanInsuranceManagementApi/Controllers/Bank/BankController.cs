@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeLoanInsuranceManagementApi.Controllers
 {
     
-    [ApiVersion("2.0")]
+    [ApiVersion("2.0")]   
     public class BanksController : Controller
     {
         private readonly IBankService _bankService;
@@ -21,16 +21,19 @@ namespace HomeLoanInsuranceManagementApi.Controllers
 
         [HttpGet]
         [Route("api/Banks/")]
-        public async Task<IEnumerable<Bank>> Get()
+        public async Task<ActionResult<IEnumerable<Bank>>> GetAllBanks()
         {
-            return await _bankService.GetAll();
+           
+            var banks = await _bankService.GetAll();
+            return Ok(banks);
         }
 
         [HttpGet()]
-        [Route("api/Banks/bank/{id}")]
-        public async Task<Bank> Get(string id)
+        [Route("api/Banks/{id}")]
+        public async Task<ActionResult<Bank>> GetBank(string id)
         {
-            return await _bankService.Get(id) ?? new Bank();
+            var bank = await _bankService.Get(id) ?? new Bank();
+            return Ok(bank);
         }
 
         [HttpPost]
@@ -53,25 +56,29 @@ namespace HomeLoanInsuranceManagementApi.Controllers
         }
 
         // PUT api/notes/5 - updates a specific note
-        [HttpPut("{id}")]
-        public void Put(string id, [FromBody]string comments)
+        [HttpPut()]
+        [Route("api/Banks/Update/{id}")]
+        public async Task<ActionResult<Result>> Put(string id, Bank bank)
         {
-            Bank bank = new Bank();
-            bank.Comments = comments;
-            _bankService.Update(id, bank);
+            var result = await _bankService.Update(id, bank);
+            return Ok(result);
         }
 
         [HttpDelete()]
-        public void Delete()
+        [Route("api/Banks/DeleteAll")]
+        public async Task<ActionResult<Result>> Delete()
         {
-            _bankService.RemoveAll();
+            var result = await _bankService.RemoveAll();
+            return Ok(result);
         }
 
         // DELETE api/notes/5 - deletes a specific note
-        [HttpDelete("{id}")]
-        public void Delete(string id)
+        [HttpDelete]
+        [Route("api/Banks/Delete/{id}")]
+        public async Task<ActionResult<Result>> Delete(string id)
         {
-            _bankService.Remove(id);
+            var result = await _bankService.Remove(id);
+            return Ok(result);
         }
     }
 }

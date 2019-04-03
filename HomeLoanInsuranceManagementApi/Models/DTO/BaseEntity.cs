@@ -19,6 +19,7 @@ namespace HomeLoanInsuranceManagementApi.Models
         public string CreatedUsername { get; set; }
 
         [BsonDateTimeOptions]
+        // attribute to gain control on datetime serialization
         public DateTime CreatedOn { get; set; }
 
         public string UpdatedUsername { get; set; }
@@ -27,7 +28,9 @@ namespace HomeLoanInsuranceManagementApi.Models
         // attribute to gain control on datetime serialization
         public DateTime UpdatedOn { get; set; } = DateTime.Now;
 
-        public string Comments { get; set; }  
+        public string Comments { get; set; }
+
+        public List<String> UpdateComments { get; set; }
 
 
 

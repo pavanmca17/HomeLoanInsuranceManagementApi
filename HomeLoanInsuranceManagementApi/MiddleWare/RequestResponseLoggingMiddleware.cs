@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HomeLoanInsuranceManagementApi.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,16 +14,18 @@ namespace HomeLoanInsuranceManagementApi.Middleware
     public class RequestResponseLoggingMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly IOptions<Settings> _settings;
 
-        public RequestResponseLoggingMiddleware(RequestDelegate next)
+        public RequestResponseLoggingMiddleware(RequestDelegate next, IOptions<Settings> settings)
         {
             _next = next;
+            _settings = settings;
 
         }
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.Request.Headers["api-version"] == "2.0")
+            if (_settings.Value.RequestResponseLogging)
             {
                 string request = await FormatRequest(context.Request);
 

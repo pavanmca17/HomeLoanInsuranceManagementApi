@@ -3,7 +3,7 @@ using HomeLoanInsuranceManagementApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using System;
 
 namespace HomeLoanInsuranceManagementApi.Extensions
 {
@@ -28,7 +28,9 @@ namespace HomeLoanInsuranceManagementApi.Extensions
                 options.MongoDBConnectionString = Configuration.GetSection("DBConnections:MongoConnectionString").Value;               
                 options.MongoDatabase = Configuration.GetSection("DBConnections:MongoDataBase").Value;               
                 options.Env = Configuration.GetSection("Enviroment:Value").Value;
-               
+                options.RequestResponseLogging = Convert.ToBoolean(Configuration.GetSection("RequestResponseLogging").Value);
+
+
             });
         }
 

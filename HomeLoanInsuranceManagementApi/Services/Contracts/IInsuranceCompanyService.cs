@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace HomeLoanInsuranceManagementApi.Services.Contracts
 {
-    public interface IBorrowerService : IService<Borrower>
+    public interface IInsuranceCompanyService : IService<InsuranceCompany>
     {
-        Task<Property> GetPropertyDetails();
-
-        Task<Loan> GetLoanDetails();
-
         Task<List<InsurancePolicy>> GetInsurancePoliciesDetails();
 
-        // persuming a Single borrow can own Multiple Properties and Loans 
+        Task<List<Loan>> GetLoansDetails();
+
         Task<List<Property>> GetPropertiesDetails();
 
-        Task<List<Loan>> GetLoansDetails();
+        Task<List<Borrower>> GetBorrowersDetails();
+
+
     }
 }

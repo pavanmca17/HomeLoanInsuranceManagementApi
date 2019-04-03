@@ -13,10 +13,4 @@
     <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Insurance\" />
-    <Folder Include="Controllers\Borrower\" />
-    <Folder Include="Controllers\Property\" />
-  </ItemGroup>
-
 </Project>

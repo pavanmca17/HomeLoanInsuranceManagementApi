@@ -1,31 +1,32 @@
-﻿using HomeLoanInsuranceManagementApi.DataBaseContext;
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HomeLoanInsuranceManagementApi.DataBaseContext;
 using HomeLoanInsuranceManagementApi.Models;
 using HomeLoanInsuranceManagementApi.Services.Contracts;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HomeLoanInsuranceManagementApi.Services.Providers
 {
-    public class BankServie : IBankService
+    public class LoanService : ILoanService
     {
         private readonly MongoDBContext _context = null;
 
-        public BankServie(IOptions<Settings> settings)
+        public LoanService(IOptions<Settings> settings)
         {
             _context = new MongoDBContext(settings);
         }
 
         // Get all Banks
-        public async Task<IEnumerable<Bank>> GetAll()
+        public async Task<IEnumerable<Loan>> GetAll()
         {
             try
             {
-                return await _context.Banks.Find(_ => true).ToListAsync();
+                return await _context.Loan.Find(_ => true).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -34,34 +35,34 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
         }
 
         // query after Id or InternalId (BSonId value)
-        public async Task<Bank> Get(string id)
+        public async Task<Loan> Get(string id)
         {
             try
             {
                 ObjectId internalId = GetInternalId(id);
-                return await _context.Banks.Find(note => note.Id == id || note.InternalId == internalId).FirstOrDefaultAsync();
+                return await _context.Loan.Find(loan => loan.Id == id || loan.InternalId == internalId).FirstOrDefaultAsync();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-        }        
+        }
 
-        public async Task<Result> Add(Bank bank)
+        public async Task<Result> Add(Loan loan)
         {
-            Result result = new Result(); 
-           
+            Result result = new Result();
+
             try
             {
-                await _context.Banks.InsertOneAsync(bank);
+                await _context.Loan.InsertOneAsync(loan);
                 result.IsSuccess = true;
-                result.Message = "Bank Created Successfully";              
+                result.Message = "Loan Record added";
 
             }
             catch (Exception ex)
             {
                 // log or manage the exception
-                throw ex;   
+                throw ex;
             }
 
             return await Task.FromResult<Result>(result);
@@ -70,12 +71,12 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
         public async Task<Result> Remove(string id)
         {
             Result result = new Result();
+
             try
             {
-                DeleteResult actionResult = await _context.Banks.DeleteOneAsync(Builders<Bank>.Filter.Eq("Id", id));
+                DeleteResult actionResult = await _context.Loan.DeleteOneAsync(Builders<Loan>.Filter.Eq("Id", id));
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
-                result.Message = "Bank Record Deleted";
-                
+                result.Message = "Loan Record Deleted";                 
             }
             catch (Exception ex)
             {
@@ -86,24 +87,35 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             return await Task.FromResult<Result>(result);
         }
 
-        public async Task<Result> Update(string id, Bank bank)
+        //public async Task<bool> UpdateBorrower(string id, Borrower borrower)
+        //{
+        //    var filter = Builders<Borrower>.Filter.Eq(s => s.Id, id);
+        //    var update = Builders<Borrower>.Update.Set(s => s.Comments, borrower.Comments).CurrentDate(s => s.UpdatedOn);
+
+        //    try
+        //    {
+        //        UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
+
+        //        return actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // log or manage the exception
+        //        throw ex;
+        //    }
+        //}
+
+        public async Task<Result> Update(string id, Loan loan)
         {
             Result result = new Result();
             try
             {
-                var filter = Builders<Bank>.Filter.Eq(s => s.Id, id);
-                var update = Builders<Bank>.Update.Set(s => s.BorrowerIds, bank.BorrowerIds).
-                                                   Set(s => s.Comments, bank.Comments).
-                                                   CurrentDate(s => s.UpdatedOn);
-
-                UpdateResult actionResult = await _context.Banks.UpdateOneAsync(filter, update);
-
-                //ReplaceOneResult actionResult = await _context.Banks.ReplaceOneAsync(n => n.Id.Equals(id),
-                //                                                                      bank,
-                //                                                                      new UpdateOptions { IsUpsert = true });
+                ReplaceOneResult actionResult = await _context.Loan.ReplaceOneAsync(n => n.Id.Equals(id),
+                                                                                      loan,
+                                                                                      new UpdateOptions { IsUpsert = true });
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
-                result.Message = "Bank Record Updated";
-                
+                result.Message = "Loan Record Updated";
+               
             }
             catch (Exception ex)
             {
@@ -120,10 +132,9 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             Result result = new Result();
             try
             {
-                DeleteResult actionResult = await _context.Banks.DeleteManyAsync(new BsonDocument());
-
+                DeleteResult actionResult = await _context.Loan.DeleteManyAsync(new BsonDocument());
                 result.IsSuccess = actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
-                result.Message = "Deleted all Bank records";                
+                result.Message = "All Loan records deleted";              
             }
             catch (Exception ex)
             {
@@ -143,22 +154,17 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             return internalId;
         }
 
-        Task<List<InsurancePolicy>> IBankService.GetAllPolicies()
+        public Task<Borrower> GetBorrowerDetails()
         {
             throw new NotImplementedException();
         }
 
-        Task<List<Borrower>> IBankService.GetAllBorrowers()
+        public Task<Property> GetPropertyDetails()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Loan>> GetAllLoans()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Property>> GetAllProperties()
+        public Task<List<InsurancePolicy>> GetInsurancePoliciesDetails()
         {
             throw new NotImplementedException();
         }

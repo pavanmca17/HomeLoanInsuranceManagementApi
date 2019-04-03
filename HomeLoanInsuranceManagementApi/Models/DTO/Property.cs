@@ -6,6 +6,16 @@ namespace HomeLoanInsuranceManagementApi.Models
 {
     public class Property : BaseEntity
     {
-       public String borrowerId { get; set; }
+        public String BankID { get; set; }
+
+        public String LoanID { get; set; }
+
+        public String borrowerId { get; set; }
+
+        public String currentPolicyID { get; set; }
+
+        public List<String> previouspoliciesIds { get; set; }
+
+
     }
 }

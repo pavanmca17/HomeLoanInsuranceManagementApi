@@ -19,7 +19,7 @@ namespace HomeLoanInsuranceManagementApi.DataBaseContext
                 _mongoDatabase = mongoClient.GetDatabase(settings.Value.MongoDatabase);
         }
 
-        // get a collection of Notes
+        // get a collection of Banks
         public IMongoCollection<Bank> Banks
         {
             get
@@ -28,6 +28,62 @@ namespace HomeLoanInsuranceManagementApi.DataBaseContext
             }
 
         }
+
+        // get a collection of InsuranceCompany
+        public IMongoCollection<InsuranceCompany> InsuranceCompany
+        {
+            get
+            {
+                return _mongoDatabase.GetCollection<InsuranceCompany>("InsuranceCompany");
+            }
+
+        }
+
+        // get a collection of InsurancePolicies
+        public IMongoCollection<InsurancePolicy> InsurancePolicy
+        {
+            get
+            {
+                return _mongoDatabase.GetCollection<InsurancePolicy>("InsurancePolicy");
+            }
+
+        }
+
+        // get a collection of Loan
+        public IMongoCollection<Loan> Loan
+        {
+            get
+            {
+                return _mongoDatabase.GetCollection<Loan>("Loan");
+            }
+
+        }
+
+        // get a collection of Property
+        public IMongoCollection<Property> Property
+        {
+            get
+            {
+                return _mongoDatabase.GetCollection<Property>("Property");
+            }
+
+        }
+
+        // get a collection of Borrower
+        public IMongoCollection<Borrower> Borrower
+        {
+            get
+            {
+                return _mongoDatabase.GetCollection<Borrower>("Borrower");
+            }
+
+        }
+
+        
+
+        
+
+
 
 
     }

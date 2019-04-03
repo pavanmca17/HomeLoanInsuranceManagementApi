@@ -9,7 +9,8 @@ namespace HomeLoanInsuranceManagementApi.Models
     {
         public string MongoDBConnectionString;
         public string MongoDatabase;
-        public string Env;      
+        public string Env;
+        public bool RequestResponseLogging;
 
     }    
 }

@@ -15,18 +15,13 @@ namespace HomeLoanInsuranceManagementApi.Services.Contracts
 
         Task<Result> Add(T t);
 
-        Task<bool> Update(string id, T t);
+        Task<Result> Update(string id, T t);
 
-        Task<bool> Remove(string id);
+        Task<Result> Remove(string id);
 
-        // should be used with high cautious, only in relation with demo setup
-        Task<bool> RemoveAll();
+        Task<Result> RemoveAll();
 
-        // demo interface - full document update
-        //Task<bool> UpdateDocument(string id, string body);
-
-        // query after multiple parameters
-        //  Task<IEnumerable<Bank>> GetBanks(string bodyText, DateTime updatedFrom, long headerSizeLimit);
+            
 
     }
 }
