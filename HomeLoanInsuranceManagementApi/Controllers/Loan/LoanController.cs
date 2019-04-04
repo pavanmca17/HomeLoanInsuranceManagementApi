@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeLoanInsuranceManagementApi.Controllers
 {
         [ApiVersion("2.0")]
-        [ApiController]
+        [ApiController]       
         public class LoanController : Controller
         {
             private readonly ILoanService _loanService;
