@@ -56,7 +56,7 @@ namespace HomeLoanInsuranceManagementApi.Controllers
             return Ok(result);
         }
 
-        // PUT api/notes/5 - updates a specific note
+       
         [HttpPut()]
         [Route("api/Banks/Update/{id}")]
         public async Task<ActionResult<Result>> Put(string id, Bank bank)
