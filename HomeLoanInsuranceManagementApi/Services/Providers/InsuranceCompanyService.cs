@@ -93,9 +93,10 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             try
             {
                 var filter = Builders<InsuranceCompany>.Filter.Eq(s => s.Id, id);
-                var update = Builders<InsuranceCompany>.Update.Set(s => s.InsuredBorrowersIds, insuranceCompany.InsuredBorrowersIds)
+                var update = Builders<InsuranceCompany>.Update.Set(s => s.policiesIds, insuranceCompany.policiesIds)
                                                                .Set(s => s.InsuredPropertyIds, insuranceCompany.InsuredPropertyIds)
-                                                               .Set(s => s.policiesIds, insuranceCompany.policiesIds)
+                                                               .Set(s => s.InsuredBorrowersIds, insuranceCompany.InsuredBorrowersIds)
+                                                               .Set(s => s.UpdateComments, insuranceCompany.UpdateComments)
                                                                .CurrentDate(s => s.UpdatedOn);
                 ReplaceOneResult actionResult = await _context.InsuranceCompany.ReplaceOneAsync(n => n.Id.Equals(id),
                                                                                       insuranceCompany,

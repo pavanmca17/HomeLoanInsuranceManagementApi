@@ -44,12 +44,12 @@ namespace HomeLoanInsuranceManagementApi.Controllers
             var result = await _insuranceCompanyService.Add(new InsuranceCompany
             {
                 Id = Guid.NewGuid().ToString(),
-                Name = insuranceCompany.Name,
+                Name = insuranceCompany.Name,                
                 CreatedUsername = insuranceCompany.CreatedUsername,
                 CreatedOn = DateTime.Now,
                 UpdatedUsername = null,
                 UpdatedOn = default(DateTime),
-                Comments = "InsuranceCompany Entity Created"
+                Comments = "InsuranceCompany Entity Creation"                
             });
 
             return Ok(result);

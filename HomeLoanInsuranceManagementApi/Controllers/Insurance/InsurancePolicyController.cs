@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeLoanInsuranceManagementApi.Controllers
 {
         [ApiVersion("2.0")]
-        [ApiController]
         public class InsurancePolicyController : Controller
         {
             private readonly IInsurancePolicyService _insurancePolicyService;
@@ -45,11 +44,17 @@ namespace HomeLoanInsuranceManagementApi.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = insurancePolicy.Name,
+                    BorrowerId = insurancePolicy.BorrowerId,
+                    InsuredAmount = insurancePolicy.InsuredAmount,
+                    PolicyStartDate = insurancePolicy.PolicyStartDate,
+                    PolicyEndDate = insurancePolicy.PolicyEndDate,
+                    PropertyId = insurancePolicy.PropertyId,
+                    IsActive = true,                    
                     CreatedUsername = insurancePolicy.CreatedUsername,
                     CreatedOn = DateTime.Now,
                     UpdatedUsername = null,
                     UpdatedOn = default(DateTime),
-                    Comments = "InsuranceCompany Entity Created"
+                    Comments = "Insurance Policy Entity Creation" 
                 });
 
                 return Ok(result);

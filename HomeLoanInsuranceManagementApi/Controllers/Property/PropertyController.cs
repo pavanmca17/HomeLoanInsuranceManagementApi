@@ -43,11 +43,13 @@ namespace HomeLoanInsuranceManagementApi.Controllers
             {
                 Id = Guid.NewGuid().ToString(),
                 Name = property.Name,
+                BankID = property.BankID,
+                borrowerId = property.borrowerId,                
                 CreatedUsername = property.CreatedUsername,
                 CreatedOn = DateTime.Now,
                 UpdatedUsername = null,
                 UpdatedOn = default(DateTime),
-                Comments = "Property Entity Created"
+                Comments = "Property Entity Creation"                
             });
 
             return Ok(result);

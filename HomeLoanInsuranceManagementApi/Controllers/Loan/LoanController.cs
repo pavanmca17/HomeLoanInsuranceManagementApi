@@ -44,11 +44,16 @@ namespace HomeLoanInsuranceManagementApi.Controllers
                 {
                     Id = Guid.NewGuid().ToString(),
                     Name = loan.Name,
+                    BankId = loan.BankId,
+                    BorrowerId = loan.BorrowerId,
+                    OriginalAmount = loan.OriginalAmount,
+                    OriginalTenure = loan.OriginalTenure,
+                    PropertyId = loan.PropertyId,                    
                     CreatedUsername = loan.CreatedUsername,
                     CreatedOn = DateTime.Now,
                     UpdatedUsername = null,
                     UpdatedOn = default(DateTime),
-                    Comments = "Loan Entity Created"
+                    Comments = "Loan Entity Creation"                    
                 });
 
                 return Ok(result);

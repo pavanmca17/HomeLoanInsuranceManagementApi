@@ -90,9 +90,13 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             try
             {
                 var filter = Builders<Property>.Filter.Eq(s => s.Id, id);
-                var update = Builders<Property>.Update.Set(s => s.currentPolicyID, property.currentPolicyID)
-                                                      .Set(s => s.previouspoliciesIds, property.previouspoliciesIds)
-                                                      .CurrentDate(s => s.UpdatedOn);
+                var update = Builders<Property>.Update.Set(s => s.LoanID, property.LoanID)
+                                                       .Set(s => s.currentPolicyID, property.currentPolicyID)
+                                                       .Set(s => s.previouspoliciesIds, property.previouspoliciesIds)
+                                                       .Set(s => s.UpdateComments, property.UpdateComments)
+                                                       .CurrentDate(s => s.UpdatedOn);               
+
+
 
                 UpdateResult actionResult = await _context.Property.UpdateOneAsync(filter, update);
 

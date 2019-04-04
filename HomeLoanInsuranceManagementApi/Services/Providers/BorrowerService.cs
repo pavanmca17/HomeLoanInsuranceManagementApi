@@ -49,11 +49,13 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
 
         public async Task<Result> Add(Borrower borrower)
         {
-            Result result = new Result() { IsSuccess = true, Message = "Message" };
+            Result result = new Result();
 
             try
             {
                 await _context.Borrower.InsertOneAsync(borrower);
+                result.IsSuccess = true;
+                result.Message = "Borrower Created";
 
             }
             catch (Exception ex)
@@ -90,13 +92,13 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             try
             {
                 var filter = Builders<Borrower>.Filter.Eq(s => s.Id, id);
-                var update = Builders<Borrower>.Update.Set(s => s.Comments, borrower.Comments).
-                             CurrentDate(s => s.UpdatedOn);
-
-
-                //ReplaceOneResult actionResult = await _context.Borrower.ReplaceOneAsync(n => n.Id.Equals(id),
-                //                                                                      bank,
-                //                                                                      new UpdateOptions { IsUpsert = true });
+                var update = Builders<Borrower>.Update.Set(s => s.LoanId, borrower.LoanId)
+                                                       .Set(s => s.PropertyId, borrower.PropertyId)
+                                                       .Set(s => s.PolicyID, borrower.PolicyID)
+                                                       .Set(s => s.previousPoliciesID, borrower.previousPoliciesID)
+                                                       .Set(s => s.UpdateComments, borrower.UpdateComments)
+                                                       .CurrentDate(s => s.UpdatedOn);
+              
 
                 UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
 

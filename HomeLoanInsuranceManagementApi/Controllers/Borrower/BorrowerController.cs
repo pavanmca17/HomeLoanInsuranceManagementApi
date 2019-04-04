@@ -9,8 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeLoanInsuranceManagementApi.Controllers
 {
 
-    [ApiVersion("2.0")]
-    [ApiController]
+    [ApiVersion("2.0")]    
     public class BorrowerController : Controller
     {
         private readonly IBorrowerService _borrowerService;
@@ -44,12 +43,20 @@ namespace HomeLoanInsuranceManagementApi.Controllers
             var result = await _borrowerService.Add(new Borrower
             {
                 Id = Guid.NewGuid().ToString(),
-                Name = borrower.Name,
+                Name = borrower.FirstName + borrower.MiddleName + borrower.LastName,
+                FirstName = borrower.FirstName,
+                MiddleName = borrower.MiddleName,
+                LastName = borrower.LastName,
+                Email = borrower.Email,
+                gender = borrower.gender,
+                MailingAddress = borrower.MailingAddress,
+                StreetAddress = borrower.StreetAddress,
+                Phone = borrower.Phone,                
                 CreatedUsername = borrower.CreatedUsername,
                 CreatedOn = DateTime.Now,
                 UpdatedUsername = null,
                 UpdatedOn = default(DateTime),
-                Comments = "Borrower Entity Created"
+                Comments = "Borrower Entity Creation" 
             });
 
             return Ok(result);

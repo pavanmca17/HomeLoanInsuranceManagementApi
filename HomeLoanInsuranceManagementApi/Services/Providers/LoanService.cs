@@ -87,24 +87,6 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
             return await Task.FromResult<Result>(result);
         }
 
-        //public async Task<bool> UpdateBorrower(string id, Borrower borrower)
-        //{
-        //    var filter = Builders<Borrower>.Filter.Eq(s => s.Id, id);
-        //    var update = Builders<Borrower>.Update.Set(s => s.Comments, borrower.Comments).CurrentDate(s => s.UpdatedOn);
-
-        //    try
-        //    {
-        //        UpdateResult actionResult = await _context.Borrower.UpdateOneAsync(filter, update);
-
-        //        return actionResult.IsAcknowledged && actionResult.ModifiedCount > 0;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // log or manage the exception
-        //        throw ex;
-        //    }
-        //}
-
         public async Task<Result> Update(string id, Loan loan)
         {
             Result result = new Result();
@@ -114,6 +96,8 @@ namespace HomeLoanInsuranceManagementApi.Services.Providers
                 var filter = Builders<Loan>.Filter.Eq(s => s.Id, id);
                 var update = Builders<Loan>.Update.Set(s => s.CurrentInsurancePolicyID, loan.CurrentInsurancePolicyID)
                                                    .Set(s => s.PreviousPoliciesIds, loan.PreviousPoliciesIds)
+                                                   .Set(s => s.RemainingAmount, loan.RemainingAmount)
+                                                   .Set(s => s.RemainingTenure, loan.RemainingTenure)
                                                    .CurrentDate(s => s.UpdatedOn);
 
                 UpdateResult actionResult = await _context.Loan.UpdateOneAsync(filter, update);

@@ -49,7 +49,12 @@ namespace HomeLoanInsuranceManagementApi
                 services.ConfigureValues(Configuration);
 
                 services.AddTransient<IBankService, BankServie>();
-               
+                services.AddTransient<IBorrowerService, BorrowerService>();
+                services.AddTransient<IInsuranceCompanyService, InsuranceCompanyService>();
+                services.AddTransient<IInsurancePolicyService, InsurancePolicyService>();
+                services.AddTransient<ILoanService, LoanService>();
+                services.AddTransient<IPropertyService, PropertyService>();
+
 
                 services.AddCors(policy =>
                 {
