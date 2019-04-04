@@ -32,6 +32,7 @@ namespace HomeLoanInsuranceManagementApi
             {
 
                 services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
                 //.ConfigureApiBehaviorOptions(options =>
                 //{
                 //    options.InvalidModelStateResponseFactory = context =>
@@ -42,12 +43,14 @@ namespace HomeLoanInsuranceManagementApi
                 //    };
                 //});
 
+
                 // api versioning
                 services.AddApiVersioning(o => o.ApiVersionReader = new HeaderApiVersionReader("api-version"));
-                         
 
-                services.ConfigureValues(Configuration);
+               // Read Configuration Values
+               services.ConfigureValues(Configuration);
 
+                // Service Dependency 
                 services.AddTransient<IBankService, BankServie>();
                 services.AddTransient<IBorrowerService, BorrowerService>();
                 services.AddTransient<IInsuranceCompanyService, InsuranceCompanyService>();
@@ -55,7 +58,7 @@ namespace HomeLoanInsuranceManagementApi
                 services.AddTransient<ILoanService, LoanService>();
                 services.AddTransient<IPropertyService, PropertyService>();
 
-
+                // Cors
                 services.AddCors(policy =>
                 {
                     policy.AddPolicy("CorsPolicy", options => options.AllowAnyHeader()
@@ -81,19 +84,25 @@ namespace HomeLoanInsuranceManagementApi
                     app.UseDeveloperExceptionPage();
                 }
 
+                // Staging specfic code 
                 if (env.IsStaging())
                 {
 
                 }
 
+                // Production specfic code - Logging / Cross cutting concerns
                 if (env.IsProduction())
                 {
 
                 }
 
+                // Middle Ware
                 app.ConfigureRequestResponseLoggingMiddleware();
                 app.ConfigureCustomExceptionMiddleware();
+
+                // Enabling CORS
                 app.UseCors("CorsPolicy");
+
                 app.UseMvc();
 
 

@@ -8,6 +8,8 @@ namespace HomeLoanInsuranceManagementApi.Services.Contracts
 {
     public interface IInsuranceCompanyService : IService<InsuranceCompany>
     {
+        // Methods are Querying Insurance Company Entity related information
+
         Task<List<InsurancePolicy>> GetInsurancePoliciesDetails();
 
         Task<List<Loan>> GetLoansDetails();
